@@ -27,5 +27,3 @@ EXPOSE 3141
 RUN /usr/sbin/sshd -D &
 RUN wget http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.24/swarm-client-1.24-jar-with-dependencies.jar
 RUN java -jar swarm-client-1.24-jar-with-dependencies.jar -master http://moneypenny:9000 -executors 1 -password jenkins -name msopenstack_sentinel_centos7 -username jenkins 
-
-
