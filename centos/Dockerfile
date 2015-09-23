@@ -6,6 +6,7 @@ RUN yum install wget -y
 RUN wget http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
 RUN rpm -i puppetlabs-release-el-7.noarch.rpm
 RUN yum update -y
+RUN yum install expect -y
 RUN yum install ruby -y
 RUN yum install git -y
 RUN yum install screen -y
