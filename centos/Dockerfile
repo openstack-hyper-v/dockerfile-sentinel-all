@@ -22,9 +22,8 @@ RUN useradd jenkins
 RUN echo "jenkins:jenkins" | chpasswd
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+ADD sentinel_startup.sh /etc/sentinel_startup.sh
 EXPOSE 22
 EXPOSE 3141
 RUN /usr/sbin/sshd -D &
 RUN wget http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.24/swarm-client-1.24-jar-with-dependencies.jar
-RUN echo "java -jar swarm-client-1.24-jar-with-dependencies.jar -master \$1 -executors 1 -password jenkins -name \$2 -username jenkins" > /usr/sbin/sentinel_startup.sh
-RUN chmod u+x /usr/sbin/sentinel_startup.sh 
