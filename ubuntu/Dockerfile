@@ -25,7 +25,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 RUN wget http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
 RUN echo "\n\
 echo "Starting up connection to $1 using name: $2" \n\
-java -jar swarm-client-1.24-jar-with-dependencies.jar -master $1 -executors 1 -password jenkins -name $2 -username jenkins \n\
+java -jar swarm-client-2.0-jar-with-dependencies.jar -master $1 -executors 1 -password jenkins -name $2 -username jenkins \n\
 " >> /etc/sentinel_startup.sh
 EXPOSE 22
 EXPOSE 3141
