@@ -22,6 +22,7 @@ RUN useradd jenkins
 RUN echo "jenkins:jenkins" | chpasswd
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 ADD sentinel_startup.sh /etc/sentinel_startup.sh
 EXPOSE 22
 EXPOSE 3141
