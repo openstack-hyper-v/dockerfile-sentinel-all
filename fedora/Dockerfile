@@ -13,7 +13,7 @@ RUN yum install screen -y
 RUN yum install -y ipmitool
 RUN yum install -y OpenIPMI
 RUN yum install -y openssh-server
-RUN yum install java-1.7.0-openjdk -y
+RUN yum install java-1.8.0-openjdk -y
 RUN yum install puppet -y
 RUN gem install r10k 
 RUN gem install hiera-eyaml 
