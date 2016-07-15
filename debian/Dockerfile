@@ -1,9 +1,9 @@
-FROM ubuntu:14.04
+FROM debian:jessie
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y
 RUN apt-get install wget -y
-RUN wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
-RUN dpkg -i puppetlabs-release-trusty.deb
+RUN wget https://apt.puppet.com/puppetlabs-release-jessie.deb
+RUN dpkg -i puppetlabs-release-jessie.deb
 RUN apt-get update -y
 RUN apt-get install software-properties-common -y
 RUN apt-get install expect -y
