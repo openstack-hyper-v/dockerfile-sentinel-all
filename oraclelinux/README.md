@@ -3,4 +3,4 @@
 
 
 # dockerfile-sentinel-all
-# Here's where our dockerfile for centos containers goes
+# Here's where our dockerfile for oraclelinux containers goes
