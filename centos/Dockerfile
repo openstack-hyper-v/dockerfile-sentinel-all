@@ -30,4 +30,4 @@ java -jar swarm-client-2.0-jar-with-dependencies.jar -master $1 -executors 1 -pa
 EXPOSE 22
 EXPOSE 3141
 RUN /usr/sbin/sshd -D &
-RUN wget http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.24/swarm-client-1.24-jar-with-dependencies.jar
+RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
