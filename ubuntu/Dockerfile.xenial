@@ -15,8 +15,8 @@ RUN apt-get install screen -y
 RUN apt-get install ipmitool -y
 RUN apt-get install openipmi -y
 RUN apt-get install openssh-server -y
-# xenial only has openjdk 8/9
-RUN apt-get install openjdk-9-jdk -y
+# xenial only has openjdk 8/9 (atm 9 does not work)
+RUN apt-get install openjdk-8-jdk -y
 RUN apt-get install puppet -y
 RUN gem install r10k
 RUN gem install hiera-eyaml
