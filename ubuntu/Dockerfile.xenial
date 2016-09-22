@@ -5,12 +5,13 @@ RUN apt-get install wget -y
 # Removing  Puppetlabs packages for now because xenial ships w/ the version used for trusty
 #RUN wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
 #RUN dpkg -i puppetlabs-release-trusty.deb
-RUN apt-get update -y
 RUN apt-get install software-properties-common -y
 RUN apt-get install expect -y
 RUN apt-get install ruby -y
 RUN apt-get install ruby-dev -y
 RUN apt-get install git -y
+RUN apt-get install unrar -y
+RUN apt-get install unzip -y
 RUN apt-get install screen -y
 RUN apt-get install ipmitool -y
 RUN apt-get install OpenIPMI -y

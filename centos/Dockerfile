@@ -3,12 +3,14 @@ FROM centos:latest
 RUN yum install tar -y
 RUN yum install bzip2 -y
 RUN yum install wget -y
-RUN wget http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-RUN rpm -i puppetlabs-release-el-7.noarch.rpm
+RUN rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
 RUN yum update -y
 RUN yum install expect -y
 RUN yum install ruby -y
 RUN yum install git -y
+RUN yum install unrar -y
+RUN yum install unzip -y
 RUN yum install screen -y
 RUN yum install -y ipmitool
 RUN yum install -y OpenIPMI
