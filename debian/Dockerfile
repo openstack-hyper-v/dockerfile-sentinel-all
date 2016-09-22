@@ -2,7 +2,7 @@ FROM debian:jessie
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y
 RUN apt-get install wget -y
-RUN apt-get install unrar -y
+RUN apt-get install unrar-free -y
 RUN apt-get install unzip -y
 RUN wget https://apt.puppet.com/puppetlabs-release-jessie.deb
 RUN dpkg -i puppetlabs-release-jessie.deb
