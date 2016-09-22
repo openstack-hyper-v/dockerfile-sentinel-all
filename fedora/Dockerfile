@@ -9,7 +9,6 @@ RUN yum install expect -y
 RUN yum install ruby -y
 RUN yum install git -y
 RUN yum install unzip -y
-RUN yum install unrar -y
 RUN yum install screen -y
 RUN yum install -y ipmitool
 RUN yum install -y OpenIPMI
