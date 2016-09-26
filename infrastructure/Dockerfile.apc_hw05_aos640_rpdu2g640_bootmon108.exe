@@ -1,5 +1,6 @@
 FROM msopenstack/sentinel-ubuntu_trusty:latest
 #!/bin/bash
-RUN wget -c 'ftp://restrict:Kop\$74!@ftp.apc.com/restricted/hardware/nmcard/firmware/rpdu2g/640/apc_hw05_aos640_rpdu2g640_bootmon108.exe'
+RUN apt-get update -y && apt-get install unzip
+RUN wget -c 'ftp://restrict:Kop$74!@ftp.apc.com/restricted/hardware/nmcard/firmware/rpdu2g/640/apc_hw05_aos640_rpdu2g640_bootmon108.exe'
 RUN unzip apc_hw05_aos640_rpdu2g640_bootmon108.exe
 
