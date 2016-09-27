@@ -3,7 +3,7 @@ FROM fedora:21
 RUN yum install tar -y
 RUN yum install bzip2 -y
 RUN yum install wget -y
-RUN rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-fedora-21.noarch.rpm
+RUN rpm -ivh https://yum.puppetlabs.com/fedora/f21/products/x86_64/puppetlabs-release-21-11.noarch.rpm
 RUN yum update -y
 RUN yum install expect -y
 RUN yum install ruby -y
