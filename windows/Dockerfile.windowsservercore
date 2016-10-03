@@ -1,5 +1,5 @@
-FROM microsoft/windowsservercore
-RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+FROM microsoft/windowsservercore 
+RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command "$env:chocolateyUseWindowsCompression = 'false'; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 RUN choco feature enable -n allowEmptyChecksums
 RUN choco install puppet -y
 RUN choco install git -y
