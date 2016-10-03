@@ -5,7 +5,7 @@ RUN choco install puppet -y
 RUN choco install git -y
 RUN choco install wget -y
 RUN choco install rsync -y
-RUN yum install unzip -y
+RUN choco install unzip -y
 RUN choco install jdk8 -y
 RUN choco install putty -y
 RUN choco install tightvnc -y
