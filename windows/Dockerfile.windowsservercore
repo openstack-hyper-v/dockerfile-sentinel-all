@@ -3,4 +3,4 @@ RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command "$env:chocolateyUseW
 RUN choco feature enable -n allowEmptyChecksums
 RUN choco install puppet -y
 RUN choco install git -y
-RUN C:\Program Files\Puppet Labs\Puppet\sys\ruby\bin\gem install r10k
+RUN cd "c:\Program Files\Puppet Labs\Puppet\sys\ruby\bin" && gem install r10k
