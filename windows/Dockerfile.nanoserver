@@ -1,0 +1,19 @@
+FROM microsoft/nanoserver
+RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command "$env:chocolateyUseWindowsCompression = 'false'; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+RUN choco feature enable -n allowEmptyChecksums
+RUN choco install puppet -y
+RUN choco install git -y
+RUN choco install wget -yb
+RUN choco install rsync -y
+RUN choco install unzip -y
+RUN choco install jdk8 -y
+RUN choco install putty -y
+RUN choco install tightvnc -y
+RUN powershell Add-WindowsFeature Telnet-Client 
+RUN powershell Add-WindowsFeature NFS-Client
+RUN powershell Add-WindowsFeature UpdateServices-RSAT
+RUN powershell Add-WindowsFeature UpdateServices-API
+RUN mkdir -p C:\ProgramData\jenkins
+RUN cd C:\ProgramData\jenkins && wget -c https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
+
+RUN cd "c:\Program Files\Puppet Labs\Puppet\sys\ruby\bin" && gem install r10k hiera-eyaml
