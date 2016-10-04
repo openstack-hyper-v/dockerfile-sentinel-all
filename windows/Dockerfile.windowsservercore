@@ -3,7 +3,7 @@ RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command "$env:chocolateyUseW
 RUN choco feature enable -n allowEmptyChecksums
 RUN choco install puppet -y
 RUN choco install git -y
-RUN choco install wget -yb
+RUN choco install wget -y
 RUN choco install rsync -y
 RUN choco install unzip -y
 RUN choco install jdk8 -y
