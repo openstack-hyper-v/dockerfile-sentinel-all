@@ -27,6 +27,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
+RUN chmod +x startup_slave.sh
 EXPOSE 22
 EXPOSE 3141
 RUN /usr/sbin/sshd -D &
