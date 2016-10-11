@@ -26,11 +26,7 @@ RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
-RUN echo "\n\
-#!/bin/bash
-echo "Starting up connection to $1 using name: $2" \n\
-java -jar swarm-client-2.2-jar-with-dependencies.jar -master $1 -executors 2 -name $2 \n\
-" >> /etc/sentinel_startup.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
 EXPOSE 22
 EXPOSE 3141
 RUN /usr/sbin/sshd -D &
