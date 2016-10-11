@@ -26,10 +26,11 @@ RUN echo "jenkins:jenkins" | chpasswd
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
-RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
+RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
 RUN echo "\n\
+#!/bin/bash
 echo "Starting up connection to $1 using name: $2" \n\
-java -jar swarm-client-2.0-jar-with-dependencies.jar -master $1 -executors 1 -password jenkins -name $2 -username jenkins \n\
+java -jar swarm-client-2.2-jar-with-dependencies.jar -master $1 -executors 2 -name $2 \n\
 " >> /etc/sentinel_startup.sh
 EXPOSE 22
 EXPOSE 3141
