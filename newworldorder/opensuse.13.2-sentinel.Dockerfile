@@ -2,6 +2,8 @@ FROM opensuse:13.2
 MAINTAINER ppouliot@microsoft.com
 ENV CONCURRENCY_LEVEL 16
 
+# THIS BUILD WORKS FOR SUSE/OPENSUSE BUILDS
+
 RUN zypper refresh && zypper -n install ca-certificates yum-utils curl wget expect unzip screen iputils openssh freeipmi freeipmi-bmc-watchdog freeipmi-ipmidetectd OpenIPMI docker createrepo python python-d2to1 python-setuptools python-py python-pytz python-requests python-glanceclient python-glanceclient-test python-jenkinsapi python-pysnmp zypper
 RUN zypper refresh && zypper -n install -t pattern devel_C_C++ devel_rpm_build remote_desktop
 
@@ -24,8 +26,6 @@ RUN gem install r10k hiera-eyaml
 ### Valid Jenkins versions are 2.2 and 3.3
 # Make the Directory Structure
 RUN mkdir /var/run/sshd
-RUN mkdir -p /opt/jenkins/swarm ;
-RUN mkdir -p /opt/jenkins/logs ;
 
 RUN echo "root:opensuse" | chpasswd
 RUN useradd jenkins
@@ -37,11 +37,11 @@ RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 
 
 
-RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3.jar
+RUN wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3.jar
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave33.sh
-RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
+RUN wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave34.sh
-RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
+RUN wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/build_upstream_kernel_rpm.sh
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/install_upstream_kernel_rpm.sh
