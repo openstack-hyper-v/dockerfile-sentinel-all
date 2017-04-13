@@ -38,33 +38,13 @@ RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 
 
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3.jar
-RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave33.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave33.sh
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
-RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave34.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave34.sh
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
-RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
-RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/build_upstream_kernel_rpm.sh
-
-
-RUN echo "#!/bin/bash
-echo "Clone Upstream Kernel Source
-/usr/bin/git clone git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git /usr/src/linux-next 2> ../logs/03-build_kernel_linux_next.sh.log;
-# CD to  Kernel Source and Do work
-cd /usr/src/linux-next && yes "" |make oldconfig && make rpm;" > build_upstream_kernel.sh
-
-RUN echo "#!/bin/bash
-# Blunt force install the packages
-rpm -ivh /usr/local/src/packages/RPMS/x86_64/kernel-*.rpm --force ; " > install_upstream_kernel.sh
-
-
-RUN echo "#!/bin/bash
-echo "Clone Upstream Kernel Source
-/usr/bin/git clone git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git /usr/src/linux-next 2> ../logs/03-build_kernel_linux_next.sh.log;
-
-# CD to  Kernel Source and Do work
-RUN echo "#!/bin/bash
-# Blunt force install the packages
-rpm -ivh /usr/local/src/packages/RPMS/x86_64/kernel-*.rpm --force ; " > install_upstream_kernel.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/build_upstream_kernel_rpm.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/install_upstream_kernel_rpm.sh
 RUN chmod +x *.sh
 
 EXPOSE 22
