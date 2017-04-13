@@ -42,7 +42,7 @@ RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave34.sh
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
-RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/startup_slave.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/build_upstream_kernel_rpm.sh
 RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/bin/install_upstream_kernel_rpm.sh
 RUN chmod +x *.sh
