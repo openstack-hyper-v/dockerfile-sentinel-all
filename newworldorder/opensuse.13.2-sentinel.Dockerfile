@@ -2,8 +2,19 @@ FROM opensuse:13.2
 MAINTAINER ppouliot@microsoft.com
 ENV CONCURRENCY_LEVEL 16
 
-RUN zypper refresh && zypper install -t pattern devel_C_C++ devel_rpm_build remote_desktop && \
-zypper install -y curl wget expect unzip screen java_1_7_0-openjdk svn cvs iputils openssh freeipmi freeipmi-bmc-watchdog freeipmi-ipmidetectd OpenIPMI zypper puppet rubygem-puppet docker createrepo python python-d2to1 python-setuptools python-py python-pytz python-requests python-glanceclient python-glanceclient-test python-jenkinsapi python-pysnmp
+RUN zypper refresh && zypper -n install ca-certificates yum-utils curl wget expect unzip screen iputils openssh freeipmi freeipmi-bmc-watchdog freeipmi-ipmidetectd OpenIPMI docker createrepo python python-d2to1 python-setuptools python-py python-pytz python-requests python-glanceclient python-glanceclient-test python-jenkinsapi python-pysnmp zypper
+RUN zypper refresh && zypper -n install -t pattern devel_C_C++ devel_rpm_build remote_desktop
+
+RUN zypper -n --gpg-auto-import-keys ref \
+    && zypper ar http://download.opensuse.org/repositories/systemsmanagement:/puppet/openSUSE_13.2/ systemsmanagement:puppet \
+#    && zypper ar http://download.opensuse.org/repositories/systemsmanagement:/chef/openSUSE_Factory/ systemsmanagement:chef \
+    && zypper ar http://download.opensuse.org/repositories/Java:/Factory/openSUSE_13.2 Java:Factory \
+    && zypper -n --gpg-auto-import-keys  ref \
+    && zypper -n install java-1_8_0-openjdk \
+    && zypper -n install -l --force-resolution  puppet \
+#    && sed -ri 's/^(rpm.install.excludedocs.=).*/\1 no/g' /etc/zypp/zypp.conf \
+#    && sed -ri 's/^(rpm.install.excludedocs.=).*/\1 yes/g' /etc/zypp/zypp.conf \
+    && zypper clean -a
 
 RUN gem install r10k hiera-eyaml 
 
@@ -26,27 +37,26 @@ RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 
 
 
-RUN cd /opt/jenkins/bin/ && echo "*** Downloading Jenkins Swarm Slave 3.3 ***" && \
-wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3-jar-with-dependencies.jar swarm-client-3.3-jar-with-dependencies.jar 2> ../logs/01-get_jenkins33.sh.log
+RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3.jar
+RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
+RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
+
+RUN echo "
+#!/bin/bash
+echo Starting up connection to $1 using name: $2
+java -jar swarm-client-3.4.jar -master $1 -executors 2 -name $2" > ./start_slave_34.sh
 
 RUN echo "*** Creating Jenkins 3.3 Swarm Slave Startup Script ***" && \
 echo '#
 #!/bin/bash
 echo Starting up connection to $1 using name: $2
-java -jar swarm-client-2.2-jar-with-dependencies.jar -master $1 -executors 2 -name $2' > ./start_slave_22.sh
-
-RUN cd /opt/jenkins/bin/ && echo "*** Downloading Jenkins Swarm Slave 2.2 ***" && \
-wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar swarm-client-2.2-jar-with-dependencies.jar 2> ../logs/01-get_jenkins22.sh.log
+java -jar swarm-client-3.3.jar -master $1 -executors 2 -name $2' > ./start_slave_33.sh'
 
 RUN echo "*** Creating Jenkins 2.2 Swarm Slave Startup Script ***" && \
 echo '#
 #!/bin/bash
 echo Starting up connection to $1 using name: $2
 java -jar swarm-client-2.2-jar-with-dependencies.jar -master $1 -executors 2 -name $2' > ./start_slave_22.sh
-
-
-RUN zypper refresh && zypper install -t pattern devel_C_C++ devel_rpm_build remote_desktop && \
-zypper install -y curl wget svn cvs iputils openssh freeipmi freeipmi-bmc-watchdog freeipmi-ipmidetectd OpenIPMI zypper puppet rubygem-puppet docker createrepo python python-d2to1 python-setuptools python-py python-pytz python-requests python-glanceclient python-glanceclient-test python-jenkinsapi python-pysnmp
 
 RUN echo "#!/bin/bash
 echo "Clone Upstream Kernel Source
