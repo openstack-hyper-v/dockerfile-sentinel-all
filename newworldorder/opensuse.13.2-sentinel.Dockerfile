@@ -38,25 +38,13 @@ RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
 
 
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.3/swarm-client-3.3.jar
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave33.sh
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave34.sh
 RUN cd /opt/jenkins/ && /usr/bin/wget -cv https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/build_upstream_kernel_rpm.sh
 
-RUN echo "
-#!/bin/bash
-echo Starting up connection to $1 using name: $2
-java -jar swarm-client-3.4.jar -master $1 -executors 2 -name $2" > ./start_slave_34.sh
-
-RUN echo "*** Creating Jenkins 3.3 Swarm Slave Startup Script ***" && \
-echo '#
-#!/bin/bash
-echo Starting up connection to $1 using name: $2
-java -jar swarm-client-3.3.jar -master $1 -executors 2 -name $2' > ./start_slave_33.sh'
-
-RUN echo "*** Creating Jenkins 2.2 Swarm Slave Startup Script ***" && \
-echo '#
-#!/bin/bash
-echo Starting up connection to $1 using name: $2
-java -jar swarm-client-2.2-jar-with-dependencies.jar -master $1 -executors 2 -name $2' > ./start_slave_22.sh
 
 RUN echo "#!/bin/bash
 echo "Clone Upstream Kernel Source
