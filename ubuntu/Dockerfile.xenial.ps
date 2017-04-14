@@ -1,0 +1,49 @@
+FROM ubuntu:xenial
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update -y
+RUN apt-get install wget -y
+# Removing  Puppetlabs packages for now because xenial ships w/ the version used for trusty
+#RUN wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
+#RUN dpkg -i puppetlabs-release-trusty.deb
+RUN apt-get install software-properties-common -y
+RUN apt-get install expect -y
+RUN apt-get install ruby -y
+RUN apt-get install ruby-dev -y
+RUN apt-get install git -y
+RUN apt-get install unzip -y
+RUN apt-get install screen -y
+RUN apt-get install ipmitool -y
+RUN apt-get install openipmi -y
+RUN apt-get install openssh-server -y
+# xenial only has openjdk 8/9 (atm 9 does not work)
+RUN apt-get install openjdk-8-jdk -y
+RUN apt-get install puppet -y
+RUN gem install r10k
+RUN gem install hiera-eyaml
+RUN echo "root:ubuntu" | chpasswd
+RUN useradd jenkins
+RUN echo "jenkins:jenkins" | chpasswd
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed -i '/templatedir=$confdir\/templates/d' /etc/puppet/puppet.conf
+RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar
+RUN wget https://raw.githubusercontent.com/openstack-hyper-v/dockerfile-sentinel-all/master/startup_slave.sh
+RUN chmod +x startup_slave.sh
+# Clone PowerShell from Github
+RUN git clone --recursive https://github.com/PowerShell/PowerShell.git
+RUN cd PowerShell
+# Modified version of tools/download.sh from PowerShell project.
+ADD powershell/docker_download.sh /PowerShell/tools/docker_download.sh
+RUN chmod +x /PowerShell/tools/docker_download.sh
+RUN /PowerShell/tools/docker_download.sh
+# Add Powershell Toolchain for building ... Powershell.
+RUN apt-get install sudo -y
+ADD powershell/Install-Toolchain.ps1 /PowerShell/Install-Toolchain.ps1
+RUN powershell /PowerShell/Install-Toolchain.ps1
+# Build Powershell
+ADD powershell/Build-Powershell.ps1 /PowerShell/Build-Powershell.ps1
+#RUN powershell /PowerShell/Build-Powershell.ps1
+
+EXPOSE 22
+EXPOSE 3141
+RUN /usr/sbin/sshd -D &
