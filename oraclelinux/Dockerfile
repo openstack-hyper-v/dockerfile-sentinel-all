@@ -4,7 +4,7 @@ RUN yum install tar -y
 RUN yum install bzip2 -y
 RUN yum install wget -y
 RUN rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
+RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
 RUN yum update -y
 RUN yum install expect -y
 RUN yum install ruby -y
